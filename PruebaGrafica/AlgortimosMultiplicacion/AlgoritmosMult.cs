@@ -37,7 +37,7 @@ public class AlgoritmosMultiplicacion
             }
         }
 
-        // Multiplicación de matrices con NaivLoopUnrollingTwo
+        // Multiplicación de matrices con Naiv Loop Unrolling Four
         for (int i = 0; i < n; i++)
         {
             for (int j = 0; j < n; j += 2) // Desenrollado en bloques de 2

@@ -3,7 +3,7 @@
 using System.Diagnostics;
 using AlgortimosCSharp.AlgortimosMultiplicacion;
 using AlgortimosCSharp.ControlMatrices;
-using System.Drawing;
+using System.Text;
 
 class Program
 {
@@ -170,6 +170,56 @@ class Program
         crearGrafico(tiemposEnhancedParallelBlockk, "Enhanced Parallel Block");
         
         //probarAlgoritmo();
+
+        String csvFilePath = "C:/Users/Juan Alejandro/RiderProjects/PruebaGrafica/PruebaGrafica/CSV/tiempos.csv";
+        
+        using (StreamWriter writer = new StreamWriter(csvFilePath, false, Encoding.UTF8))
+        {
+            
+
+            String[] encabezados =
+            {
+                "Matrix Size", "Naive Multiplication", "Naive Loop Unrolling (Two)", "Naive Loop Unrolling (Four)",
+                "Winograd Original", "Winograd Scaled", "Strassen Naive", "Strassen Winograd",
+                "Sequential Block", "Paralel Block", "Enhanced Paralel Block"
+            };
+            String[] tamanios = { "4", "8", "16", "32", "64", "128", "256", "512" };
+
+            //Escribir encabezados
+            for (int i = 0; i < encabezados.Length; i++)
+            {
+                if (i < encabezados.Length - 1)
+                {
+                    writer.Write(encabezados[i]);
+                    writer.Write(",");
+                }
+                else
+                {
+                    writer.Write(encabezados[i]);
+                }
+            }
+            writer.WriteLine();
+
+            for (int i = 0; i < 8; i++)
+            {
+                String aux = "";
+
+                aux = tamanios[i];
+                aux = aux + "," + tiemposNOA[i];
+                aux = aux + "," + tiemposNLUT[i];
+                aux = aux + "," + tiemposNLUF[i];
+                aux = aux + "," + tiemposWinograd[i];
+                aux = aux + "," + tiemposWinogradScaled[i];
+                aux = aux + "," + tiemposStrassen[i];
+                aux = aux + "," + tiemposStrassenWinograd[i];
+                aux = aux + "," + tiemposSequentialBlock[i];
+                aux = aux + "," + tiemposParallelBlock[i];
+                aux = aux + "," + tiemposEnhancedParallelBlockk[i];
+
+                Console.WriteLine("Fila" + i + ": " + aux);
+                writer.WriteLine(aux);
+            }
+        }
     }
     
     static void probarAlgoritmo()
@@ -410,5 +460,10 @@ class Program
         // Liberar recursos
         bitmap.Dispose();
 
+    }
+
+    static void escribir_Tiempos(StreamWriter writer)
+    {
+        
     }
 }
