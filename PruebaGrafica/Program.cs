@@ -1,6 +1,7 @@
 // See https://aka.ms/new-console-template for more information
 
 using System.Diagnostics;
+using System.Globalization;
 using AlgortimosCSharp.AlgortimosMultiplicacion;
 using AlgortimosCSharp.ControlMatrices;
 using System.Text;
@@ -166,59 +167,60 @@ class Program
         tiemposEnhancedParallelBlockk[5] = CalcularTiempoEnhancedParallelBlock(parMatriz128x128);
         tiemposEnhancedParallelBlockk[6] = CalcularTiempoEnhancedParallelBlock(parMatriz256x256);
         tiemposEnhancedParallelBlockk[7] = CalcularTiempoEnhancedParallelBlock(parMatriz512x512);
+        
 
         crearGrafico(tiemposEnhancedParallelBlockk, "Enhanced Parallel Block");
         
-        //probarAlgoritmo();
+        probarAlgoritmo();
 
-        String csvFilePath = "C:/Users/Juan Alejandro/RiderProjects/PruebaGrafica/PruebaGrafica/CSV/tiempos.csv";
+         String csvFilePath = "C:/Users/Juan Alejandro/RiderProjects/PruebaGrafica/PruebaGrafica/CSV/tiempos.csv";
         
-        using (StreamWriter writer = new StreamWriter(csvFilePath, false, Encoding.UTF8))
-        {
-            
-
-            String[] encabezados =
-            {
-                "Matrix Size", "Naive Multiplication", "Naive Loop Unrolling (Two)", "Naive Loop Unrolling (Four)",
-                "Winograd Original", "Winograd Scaled", "Strassen Naive", "Strassen Winograd",
-                "Sequential Block", "Paralel Block", "Enhanced Paralel Block"
-            };
-            String[] tamanios = { "4", "8", "16", "32", "64", "128", "256", "512" };
-
-            //Escribir encabezados
-            for (int i = 0; i < encabezados.Length; i++)
-            {
-                if (i < encabezados.Length - 1)
-                {
-                    writer.Write(encabezados[i]);
-                    writer.Write(",");
-                }
-                else
-                {
-                    writer.Write(encabezados[i]);
-                }
-            }
-            writer.WriteLine();
-
-            for (int i = 0; i < 8; i++)
-            {
-                String aux = "";
-
-                aux = tamanios[i];
-                aux = aux + "," + tiemposNOA[i];
-                aux = aux + "," + tiemposNLUT[i];
-                aux = aux + "," + tiemposNLUF[i];
-                aux = aux + "," + tiemposWinograd[i];
-                aux = aux + "," + tiemposWinogradScaled[i];
-                aux = aux + "," + tiemposStrassen[i];
-                aux = aux + "," + tiemposStrassenWinograd[i];
-                aux = aux + "," + tiemposSequentialBlock[i];
-                aux = aux + "," + tiemposParallelBlock[i];
-                aux = aux + "," + tiemposEnhancedParallelBlockk[i];
-
-                Console.WriteLine("Fila" + i + ": " + aux);
-                writer.WriteLine(aux);
-            }
+         using (StreamWriter writer = new StreamWriter(csvFilePath, false, Encoding.UTF8))
+         {
+             
+        
+             String[] encabezados =
+             {
+                 "Matrix Size", "Naive Multiplication", "Naive Loop Unrolling (Two)", "Naive Loop Unrolling (Four)",
+                 "Winograd Original", "Winograd Scaled", "Strassen Naive", "Strassen Winograd",
+                 "Sequential Block", "Paralel Block", "Enhanced Paralel Block"
+             };
+             String[] tamanios = { "4", "8", "16", "32", "64", "128", "256", "512" };
+        
+             //Escribir encabezados
+             for (int i = 0; i < encabezados.Length; i++)
+             {
+                 if (i < encabezados.Length - 1)
+                 {
+                     writer.Write(encabezados[i]);
+                     writer.Write(",");
+                 }
+                 else
+                 {
+                     writer.Write(encabezados[i]);
+                 }
+             }
+             writer.WriteLine();
+        
+             for (int i = 0; i < 8; i++)
+             {
+                 String aux = "";
+        
+                 aux = tamanios[i];
+                 aux = aux + "," + tiemposNOA[i].ToString(new CultureInfo("en-US"));
+                 aux = aux + "," + tiemposNLUT[i].ToString(new CultureInfo("en-US"));
+                 aux = aux + "," + tiemposNLUF[i].ToString(new CultureInfo("en-US"));
+                 aux = aux + "," + tiemposWinograd[i].ToString(new CultureInfo("en-US"));
+                 aux = aux + "," + tiemposWinogradScaled[i].ToString(new CultureInfo("en-US"));
+                 aux = aux + "," + tiemposStrassen[i].ToString(new CultureInfo("en-US"));
+                 aux = aux + "," + tiemposStrassenWinograd[i].ToString(new CultureInfo("en-US"));
+                 aux = aux + "," + tiemposSequentialBlock[i].ToString(new CultureInfo("en-US"));
+                 aux = aux + "," + tiemposParallelBlock[i].ToString(new CultureInfo("en-US"));
+                 aux = aux + "," + tiemposEnhancedParallelBlockk[i].ToString(new CultureInfo("en-US"));
+        
+                 Console.WriteLine("Fila" + i + ": " + aux);
+                 writer.WriteLine(aux);
+             }
         }
     }
     
